@@ -1,0 +1,183 @@
+<html>
+<style>
+/* body {
+    font: 14px Georgia, serif;
+    text-align: center;
+    margin:auto; */
+  /* } */
+  #heading
+  {
+    text-align: center;
+  }
+
+  /* h1 {
+    font:  bold 50px system-ui;
+    color:#0099cc;
+  } */
+  
+  .button {
+  background-color:#0099cc;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+  input[type="number"] {
+    padding: 10px;
+    color:blue;
+    font: bold 20px system-ui, Helvetica, Sans-Serif;
+    width: 100px;
+    margin: 10px 0;
+  }
+  #randomnumber {
+    font-size: 80px;
+    color:green;
+    margin:auto;
+    display: block;
+    /* width:40%; */
+    /* top:50%; */
+    /* left:40%; */
+    animation-name: example;
+    animation-duration: 5s;
+    animation-iteration-count: 10;
+    
+  }
+
+  #getit{
+    display:none;
+  }
+  @keyframes example {
+
+    0%   {color: green;transform: scale(1.5);}
+  25%  {color: red;transform: scale(1);}
+  50%  {color: blue;transform: scale(1.5);}
+  100% {color: green;transform: scale(1);}
+}
+
+  #numbers{
+    color:green;
+    font-size:50px;
+    display: none;
+  }
+  .main {
+    margin: 0;
+  position: absolute;
+  /* border: 3px,black; */
+  /* border-style: solid; */
+  /* top: 20%; */
+  /* left: 40%; */
+        
+  }
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function IsNumeric(n) {
+      return !isNaN(n);
+    }
+
+    $(function () {
+    var one = 1;
+    var last =20;
+    const arrayOfIndexesToExclude=[1,2,3];
+    var numstr="";
+
+    //create participants list
+    for (let i = 0; i < last; i++) {
+      if(!(arrayOfIndexesToExclude.includes(i+1))){
+        numstr=numstr+" "+(i+1);
+        
+      }
+    }
+
+    // show participants  and generate button on click
+    $("#show").click(function(){
+    $("p").show(); 
+    document.getElementById("getit").style.display="block";
+  });
+    document.getElementById('numbers').innerHTML=numstr;
+    
+    // generate random number
+    var completed = $('#textbox');
+    completed.text(arrayOfIndexesToExclude)
+      $("#getit").click(function () {
+
+        
+        var numLow = one;
+        var numHigh = last;
+        
+        var adjustedHigh = parseFloat(numHigh) - parseFloat(numLow) + 1;
+        
+        var numRand=null;
+        
+        while(numRand === null || arrayOfIndexesToExclude.includes(numRand)){
+            numRand = Math.floor(Math.random() * adjustedHigh) + parseFloat(numLow);
+        }
+        
+    
+        if (
+          IsNumeric(numLow) &&
+          IsNumeric(numHigh) &&
+          parseFloat(numLow) <= parseFloat(numHigh) &&
+          numLow != "" &&
+          numHigh != ""
+        ) {
+          $("#randomnumber").text(numRand);
+          document.getElementById("all").style.display="none";
+        } else {
+          $("#randomnumber").text("Careful now...");
+        }
+    
+        return false;
+      });
+
+      $('.demo').fireworks({
+    
+    sound: true, // sound effect
+
+    opacity: 0.9,
+
+    width: '100%',
+
+    height: '100%'
+
+  });
+    
+      // $("input[type=text]").each(function () {
+      //   $(this).data("first-click", true);
+      // });
+    
+      // $("input[type=text]").focus(function () {
+      //   if ($(this).data("first-click")) {
+      //     $(this).val("");
+      //     $(this).data("first-click", false);
+      //     $(this).css("color", "black");
+      //   }
+      // });
+    });
+    
+    
+</script>
+<body>
+
+<div class="main" id="all">
+  <div id="heading"><h1 >Draw Number</h1></div>
+  <button class="button" id="show">Show Participants</button>
+  <p id="numbers" ></p>
+  <!-- <input type="number" id="lownumber"/> &nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="number" id="highnumber" /><br/> -->
+  <!-- Comp leted : <span id="textbox"></span><br><br> -->
+  <button class="button" id="getit">GENERATE</button>  
+</div>
+<div id="randomnumber"></div>
+</body>
+
+</html>
+
